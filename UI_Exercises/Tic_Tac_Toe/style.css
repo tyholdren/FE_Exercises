@@ -1,0 +1,17 @@
+.board {
+  width: 200px;
+  height: 200px;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  background: lightblue;
+  border: 1px solid black;
+}
+
+.cell:disabled {
+  color: black;
+  background: lightblue;
+  border: 1px solid black;
+}
