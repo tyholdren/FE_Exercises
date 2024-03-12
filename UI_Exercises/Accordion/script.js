@@ -24,11 +24,11 @@ class Tabs {
     const updatedTabs = new Set(this.activeTabs);
     if (this.activeTabs.has(id)) {
       updatedTabs.delete(id);
-      this.activeTabs = updatedTabs;
     } else {
       updatedTabs.add(id);
-      this.activeTabs = updatedTabs;
     }
+
+    this.activeTabs = updatedTabs;
     this.displayActiveTabs();
     return;
   }
