@@ -21,16 +21,21 @@ export default class PostFeed {
         if (postContent) {
           this.addPost(postContent);
         }
-      } else if (textContent === 'delete') {
-        this.deletePost(event);
-      } else if (textContent === 'edit') {
-        this.toggleModal(true, id);
-      } else if (textContent === 'save') {
-        this.toggleModal(false, id, true);
-      } else if (textContent === 'cancel') {
-        this.toggleModal(false, id, false);
+      } else if (textContent) {
+        const selectedAction = this.getAction(textContent, event, id);
+        selectedAction(event, id);
       }
     });
+  }
+
+  getAction(key) {
+    const actions = {
+      delete: (event, _) => this.deletePost(event),
+      edit: (_, id) => this.toggleModal(true, id),
+      save: (_, id) => this.toggleModal(false, id, true),
+      cancel: (_, id) => this.toggleModal(false, id, false),
+    };
+    return actions[key];
   }
 
   addPost(postContent) {
