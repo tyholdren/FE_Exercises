@@ -1,6 +1,8 @@
 // allow other users to add comments to this specific post
+import Button from './Button.js';
+import EditModal from './EditModal.js';
 
-class PostFeed {
+export default class PostFeed {
   constructor() {
     this.appContainer = document.getElementById('app-container');
     this.postInput = document.getElementById('post-input');
@@ -33,48 +35,45 @@ class PostFeed {
 
   addPost(postContent) {
     const newPost = document.createElement('div');
-    newPost.id = `post-${this.postIndex}`;
+    const postIndex = this.postIndex;
+    newPost.id = `post-${postIndex}`;
     newPost.textContent = postContent;
     newPost.setAttribute('class', 'post-content');
 
-    const replyButton = document.createElement('button');
-    replyButton.textContent = 'reply';
-    replyButton.setAttribute('class', 'reply-button');
+    const replyButton = new Button({
+      textContent: 'reply',
+      className: 'reply-button',
+    });
 
-    const deleteButton = document.createElement('button');
-    deleteButton.id = `delete-button-${this.postIndex}`;
-    deleteButton.textContent = 'delete';
+    const deleteButton = new Button({
+      textContent: 'delete',
+      id: `delete-button-${postIndex}`,
+      onClick: event => {
+        this.deletePost(event);
+      },
+    });
 
-    const editButton = document.createElement('button');
-    editButton.id = `edit-button-${this.postIndex}`;
-    editButton.textContent = 'edit';
+    const editButton = new Button({
+      textContent: 'edit',
+      id: `edit-button-${postIndex}`,
+      onClick: event => {
+        this.toggleModal(true, postIndex);
+      },
+    });
 
     const postContainer = document.createElement('div');
     postContainer.setAttribute('class', 'post-container');
 
-    const editModal = document.createElement('div');
-    const editInput = document.createElement('input');
-    const saveButton = document.createElement('button');
-    const cancelButton = document.createElement('button');
-
-    editInput.id = `edit-input-${this.postIndex}`;
-
-    saveButton.textContent = 'save';
-    cancelButton.textContent = 'cancel';
-    saveButton.id = `save-button-${this.postIndex}`;
-    cancelButton.id = `cancel-button-${this.postIndex}`;
-
-    editModal.appendChild(editInput);
-    editModal.appendChild(saveButton);
-    editModal.appendChild(cancelButton);
-    editModal.setAttribute('hidden', true);
-    editModal.id = `edit-modal-${this.postIndex}`;
+    const editModal = new EditModal({
+      id: postIndex,
+      onClick: this.toggleModal,
+    });
 
     postContainer.appendChild(newPost);
-    postContainer.appendChild(deleteButton);
-    postContainer.appendChild(editButton);
-    postContainer.appendChild(replyButton);
-    postContainer.appendChild(editModal);
+    postContainer.appendChild(deleteButton.getElement());
+    postContainer.appendChild(editButton.getElement());
+    postContainer.appendChild(replyButton.getElement());
+    postContainer.appendChild(editModal.getElement());
 
     this.postsContainer.appendChild(postContainer);
     this.postIndex += 1;
@@ -102,9 +101,3 @@ class PostFeed {
     editInput.value = '';
   }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM loaded');
-  const newPostFeed = new PostFeed();
-  newPostFeed.initializeFeed();
-});
