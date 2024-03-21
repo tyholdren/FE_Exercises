@@ -1,0 +1,14 @@
+.transfer-list-container {
+  display: flex;
+  flex-direction: row;
+}
+.left-container .right-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
