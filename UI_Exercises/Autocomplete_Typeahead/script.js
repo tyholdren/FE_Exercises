@@ -57,6 +57,9 @@ class Countries {
       }
       return;
     });
+    if (this.searchSuggestions.children.length) {
+      this.searchSuggestions.firstChild.style.backgroundColor = 'yellow';
+    }
   }
 }
 
