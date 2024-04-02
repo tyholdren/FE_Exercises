@@ -14,17 +14,28 @@ class Autocomplete {
       }
     });
 
-    this.searchInputContainer = document.getElementById(
+    const searchInputContainer = document.getElementById(
       'search-input-container'
     );
 
-    this.searchInputContainer.addEventListener('click', event => {
+    searchInputContainer.addEventListener('click', event => {
+      event.preventDefault();
       if (
         event.target.tagName === 'BUTTON' &&
         event.target.id !== 'search-button'
       ) {
+        event.preventDefault();
         this.searchInput.value = event.target.innerHTML;
       }
+    });
+
+    const searchFormContainer = document.getElementById(
+      'search-form-container'
+    );
+
+    searchFormContainer.addEventListener('submit', event => {
+      event.preventDefault();
+      console.log('submit event triggered');
     });
 
     this.fetchResults();

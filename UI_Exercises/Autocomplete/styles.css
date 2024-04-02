@@ -34,7 +34,7 @@
 
 .search-results button:hover {
   cursor: pointer;
-  background-color: rgb(236, 236, 236);
+  background-color: rgb(250, 250, 250);
 }
 
 .search-results button:focus {

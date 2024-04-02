@@ -8,8 +8,7 @@
     <title>Document</title>
   </head>
   <body>
-    <form autocomplete="false">
-      <label for="search-input">Search Below</label>
+    <form autocomplete="off" id="search-form-container">
       <div id="search-input-container" class="search-input-container">
         <div class="search-input">
           <input id="search-input-box" class="search-input-box" />
@@ -18,6 +17,17 @@
         <div id="search-results" class="search-results"></div>
       </div>
     </form>
-    <script src="Autocomplete.js"></script>
+    <script src="Autocomplete.js">
+
+
+      document.addEventListener('DOMContentLoaded', (event) => {
+        const form = document.getElementById('search-form-container');
+        form.addEventListener('submit', (event) => {
+          event.preventDefault(); // Prevent form from submitting/reloading the page
+          console.log('Form submitted');
+          // Your submission logic here
+        });
+      });
+    </script>
   </body>
 </html>
