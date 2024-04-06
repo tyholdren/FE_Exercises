@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { ListItem } from './Listitem';
-import { DropdownItem } from './DropDownItem';
+import ListItem from './Listitem';
+import DropdownItem from './DropdownItem';
 import './App.css';
 
 const URL = 'https://api.frontendeval.com/fake/food/';
@@ -46,7 +46,7 @@ export default function App() {
       }
     };
 
-    const debouncedItems = debounce(getItems, 5000);
+    const debouncedItems = debounce(getItems, 500);
     debouncedItems();
   }, [searchInput]);
 
