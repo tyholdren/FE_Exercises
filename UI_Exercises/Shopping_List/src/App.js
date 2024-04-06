@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { ListItem } from './Listitem';
+import { DropdownItem } from './DropDownItem';
 import './App.css';
 
 const URL = 'https://api.frontendeval.com/fake/food/';
@@ -103,29 +105,6 @@ export default function App() {
           );
         })}
       </div>
-    </div>
-  );
-}
-
-function DropdownItem({ item }) {
-  return (
-    <div className="dropdown-item">
-      <button data-item-id={item}>{item}</button>
-    </div>
-  );
-}
-
-function ListItem({ id, item, deleteItem, isChecked, onCheckboxChange }) {
-  return (
-    <div className={isChecked ? 'selected-list-item' : 'list-item'}>
-      <input
-        checked={isChecked}
-        onChange={onCheckboxChange}
-        type="checkbox"
-        id={`item-${item}`}
-      />
-      <label htmlFor={`item-${item}`}>{item}</label>
-      <button onClick={() => deleteItem(id)}>X</button>
     </div>
   );
 }
