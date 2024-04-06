@@ -11,34 +11,26 @@ const FORM2 = {
   },
 };
 
-function FormRow({
-  fieldId,
-  onChange,
-  type,
-  label,
-  placeholder,
-  value,
-  checked,
-}) {
+function FormRow({ key, type, label, value, placeholder, onChange, checked }) {
   return (
     <div className="form-container">
-      <label htmlFor={fieldId}>{label}</label>
+      <label htmlFor={key}>{label}</label>
       {type === 'boolean' ? (
         <input
-          id={fieldId}
-          onChange={onChange}
-          name={fieldId}
+          id={key}
+          name={key}
           type="checkbox"
           checked={checked}
+          onChange={onChange}
         />
       ) : (
         <input
-          id={fieldId}
-          onChange={onChange}
+          id={key}
           value={value}
-          name={fieldId}
-          type="text" // Keep it simple, use 'text' for non-checkbox types
-          placeholder={placeholder || ''}
+          name={key}
+          type={type}
+          placeholder={placeholder !== undefined ? placeholder : ''}
+          onChange={onChange}
         />
       )}
     </div>
@@ -46,37 +38,37 @@ function FormRow({
 }
 
 const App = () => {
-  const [formValues, setFormValues] = useState({
+  const [inputValues, setInputValues] = useState({
     email: '',
-    unsubscribe: false,
+    unsubscribe: true,
     reason: '',
   });
 
-  const handleOnChange = event => {
-    const { name, value, type, checked } = event.target;
-    setFormValues(prev => ({
+  const handleInputChange = event => {
+    const { name, type, value, checked } = event.target;
+    setInputValues(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
+  const formKeys = Object.keys(FORM2);
   return (
     <form>
-      {Object.entries(FORM2).map(([curKey, valueObj]) => {
-        // Hide 'reason' based on 'unsubscribe' state
-        if (valueObj.hidden && valueObj.hidden(formValues)) {
+      {formKeys.map(curKey => {
+        const valueObj = FORM2[curKey];
+        if (valueObj.hidden && valueObj.hidden(inputValues)) {
           return null;
         }
         return (
           <FormRow
             key={curKey}
-            fieldId={curKey}
-            onChange={handleOnChange}
-            type={valueObj.type}
+            type={valueObj.type === 'boolean' ? 'checkbox' : valueObj.type}
             label={valueObj.label}
+            value={inputValues[curKey]}
             placeholder={valueObj.placeholder}
-            value={formValues[curKey]}
-            checked={formValues[curKey]}
+            onChange={handleInputChange}
+            checked={inputValues[curKey]}
           />
         );
       })}
