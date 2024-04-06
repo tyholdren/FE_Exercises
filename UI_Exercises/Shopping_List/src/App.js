@@ -7,6 +7,27 @@ export default function App() {
   const [items, setItems] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [list, setList] = useState([]);
+  const [checkedState, setCheckedState] = useState({});
+
+  const debounce = (fn, delay) => {
+    let timeoutId;
+
+    return function (...args) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        fn(...args);
+      }, delay);
+    };
+  };
+
+  const handleCheckboxChange = id => {
+    setCheckedState(prevState => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  };
 
   useEffect(() => {
     const getItems = async () => {
@@ -22,7 +43,9 @@ export default function App() {
         setItems([]);
       }
     };
-    getItems();
+
+    const debouncedItems = debounce(getItems, 5000);
+    debouncedItems();
   }, [searchInput]);
 
   const updateInput = event => {
@@ -73,6 +96,8 @@ export default function App() {
               key={`item-${id}`}
               id={id}
               item={item}
+              isChecked={checkedState[id] || false}
+              onCheckboxChange={() => handleCheckboxChange(id)}
               deleteItem={deleteItem}
             />
           );
@@ -90,18 +115,12 @@ function DropdownItem({ item }) {
   );
 }
 
-function ListItem({ id, item, deleteItem }) {
-  const [isChecked, setIsChecked] = useState(false);
-
-  const toggleChecked = () => {
-    setIsChecked(!isChecked);
-  };
-
+function ListItem({ id, item, deleteItem, isChecked, onCheckboxChange }) {
   return (
     <div className={isChecked ? 'selected-list-item' : 'list-item'}>
       <input
         checked={isChecked}
-        onChange={() => toggleChecked()}
+        onChange={onCheckboxChange}
         type="checkbox"
         id={`item-${item}`}
       />
