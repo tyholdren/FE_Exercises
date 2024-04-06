@@ -1,0 +1,11 @@
+.App {
+  text-align: center;
+}
+
+.list-item {
+  color: black;
+}
+
+.selected-list-item {
+  text-decoration: line-through;
+}
