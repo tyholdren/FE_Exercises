@@ -1,5 +1,5 @@
 export default function Form2() {
-  const FORM_2_CONTENT = [
+  const FORM_2_BODY = [
     { icon: 'icon 1', title: 'Arcade', price: '$9/mo' },
     { icon: 'icon 2', title: 'Advanced', price: '$12/mo' },
     { icon: 'icon 3', title: 'Pro', price: '$15/mo' },
@@ -13,7 +13,7 @@ export default function Form2() {
       </div>
       <div className="form2-content-container">
         <div className="form2-body-container">
-          {FORM_2_CONTENT.map(({ icon, title, price }, index) => {
+          {FORM_2_BODY.map(({ icon, title, price }, index) => {
             return (
               <div key={index} className="form2-content">
                 <div>{icon}</div>

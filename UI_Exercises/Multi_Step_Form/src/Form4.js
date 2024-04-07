@@ -1,40 +1,36 @@
 export default function Form4() {
   return (
     <div>
-      <div>
+      <header>
         <h2>Finishing Up</h2>
         <h5>Double check everything looks ok before confirming.</h5>
-      </div>
-      <div className="form4-content-container">
-        <div className="form4-body-container">
-          <div className="form4-plan-container">
+      </header>
+      <div>
+        <section className="form4-body-container">
+          <section className="form4-plan-container">
             <div className="form4-section-1">
+              <span>Arcade (Monthly)</span>
+              <span>Change</span>
               <div>
-                <div>Arcade (Monthly)</div>
-                <div>Change</div>
-              </div>
-              <div>
-                <div>$9/mo</div>
+                <span>$9/mo</span>
               </div>
             </div>
             <div className="form4-section-2">
               <div className="form4-section-2-sub-section">
-                <div>Online service</div>
-                <div>+$9/mo</div>
+                <span>Online service</span>
+                <span>+$9/mo</span>
               </div>
               <div className="form4-section-2-sub-section">
-                <div>Larger storage</div>
-                <div>+$1/mo</div>
+                <span>Larger storage</span>
+                <span>+$1/mo</span>
               </div>
             </div>
+          </section>
+          <div className="form4-section-2-sub-section">
+            <span>Total (per month)</span>
+            <span>+$2/mo</span>
           </div>
-          <div>
-            <div className="form4-section-2-sub-section">
-              <div>Total (per month)</div>
-              <div>+$2/mo</div>
-            </div>
-          </div>
-        </div>
+        </section>
       </div>
     </div>
   );

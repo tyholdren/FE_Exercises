@@ -1,9 +1,9 @@
-export default function Section({ button, step, content }) {
+export default function Section({ button, stepNumber, content, onClick }) {
   return (
     <div className="section-container">
-      <button>{button}</button>
+      <button onClick={onClick}>{button}</button>
       <div className="section-content">
-        <div>{step}</div>
+        <div>{stepNumber}</div>
         <div>{content}</div>
       </div>
     </div>

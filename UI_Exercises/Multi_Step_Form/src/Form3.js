@@ -1,5 +1,5 @@
 export default function Form3() {
-  const FORM_3_CONTENT = [
+  const FORM_3_BODY = [
     {
       title: 'Online service',
       description: 'Access to multiplayer games',
@@ -23,9 +23,9 @@ export default function Form3() {
         <h2>Pick add-ons</h2>
         <h5>Add-ons help enhance your gaming experience.</h5>
       </div>
-      <div className="form3-content-container">
+      <div>
         <div className="form3-body-container">
-          {FORM_3_CONTENT.map(({ title, description, price }, index) => {
+          {FORM_3_BODY.map(({ title, description, price }, index) => {
             return (
               <div key={index} className="form3-content">
                 <input type="checkbox" />
