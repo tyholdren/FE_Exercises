@@ -44,6 +44,7 @@ function App() {
     if (event.key === 'Backspace' && event.target.value === '' && index > 0) {
       event.preventDefault();
       refsArray[index - 1].current.focus();
+      refsArray[index - 1].current.value = '';
     }
   };
 
