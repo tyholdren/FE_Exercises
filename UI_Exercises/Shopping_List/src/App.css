@@ -1,22 +1,5 @@
-.App {
-  text-align: center;
+* {
   box-sizing: border-box;
-}
-
-.list-item {
-  color: black;
-}
-
-.selected-list-item {
-  text-decoration: line-through;
-}
-
-.dropdown-container {
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
 }
 
 .shopping-list-container {
@@ -30,16 +13,40 @@
   width: 100%;
 }
 
+.dropdown-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dropdown-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
 .dropdown-item button {
   background-color: white;
-  border: 1px solid grey;
+  border: 1px solid rgb(231, 231, 231);
   border-top: none;
   margin: 0px;
-  width: 300px;
+  width: 100%;
+  text-align: left;
 }
 
 .dropdown-item :hover {
-  background-color: rgb(218, 240, 248);
+  background-color: rgb(246, 250, 252);
   cursor: pointer;
-  border: none;
+}
+
+.list-item {
+  color: black;
+}
+
+.selected-list-item {
+  text-decoration: line-through;
 }
