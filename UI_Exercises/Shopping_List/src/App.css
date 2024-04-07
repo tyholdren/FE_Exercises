@@ -73,10 +73,6 @@
   height: 20px;
 }
 
-.selected-list-item {
-  text-decoration: line-through;
-}
-
 .dropdown-item :hover {
   background-color: rgb(246, 250, 252);
   cursor: pointer;

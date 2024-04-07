@@ -8,14 +8,19 @@ export default function ListItem({
   onCheckboxChange,
 }) {
   return (
-    <div className={isChecked ? 'selected-list-item' : 'list-item'}>
+    <div className={'list-item'}>
       <input
         checked={isChecked}
         onChange={onCheckboxChange}
         type="checkbox"
         id={`item-${item}`}
       />
-      <label htmlFor={`item-${item}`}>{item}</label>
+      <label
+        htmlFor={`item-${item}`}
+        style={{ textDecoration: isChecked ? 'line-through' : 'none' }}
+      >
+        {item}
+      </label>
       <button onClick={() => deleteItem(id)}>X</button>
     </div>
   );
