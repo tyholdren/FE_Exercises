@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  box-sizing: border-box;
 }
 
 .list-item {
@@ -8,4 +9,37 @@
 
 .selected-list-item {
   text-decoration: line-through;
+}
+
+.dropdown-container {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.shopping-list-container {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.shopping-list-container input {
+  width: 100%;
+}
+
+.dropdown-item button {
+  background-color: white;
+  border: 1px solid grey;
+  border-top: none;
+  margin: 0px;
+  width: 300px;
+}
+
+.dropdown-item :hover {
+  background-color: rgb(218, 240, 248);
+  cursor: pointer;
+  border: none;
 }

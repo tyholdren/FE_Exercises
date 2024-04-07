@@ -67,7 +67,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <div>
+      <div className="shopping-list-container">
         <label htmlFor="shopping-list-input">Search for Items</label>
         <input
           id="shopping-list-input"
@@ -76,34 +76,35 @@ export default function App() {
           value={searchInput}
           onChange={updateInput}
         />
-      </div>
-      <div
-        className="dropdown-container"
-        onClick={event => handleDropdownClick(event)}
-      >
-        {items.map((item, index) => {
-          return (
-            <DropdownItem
-              key={`item-${index}`}
-              data-item-id={item}
-              item={item}
-            />
-          );
-        })}
-      </div>
-      <div className="list-container">
-        {list.map(({ id, item }) => {
-          return (
-            <ListItem
-              key={`item-${id}`}
-              id={id}
-              item={item}
-              isChecked={checkedState[id] || false}
-              onCheckboxChange={() => handleCheckboxChange(id)}
-              deleteItem={deleteItem}
-            />
-          );
-        })}
+
+        <div
+          className="dropdown-container"
+          onClick={event => handleDropdownClick(event)}
+        >
+          {items.map((item, index) => {
+            return (
+              <DropdownItem
+                key={`item-${index}`}
+                data-item-id={item}
+                item={item}
+              />
+            );
+          })}
+        </div>
+        <div className="list-container">
+          {list.map(({ id, item }) => {
+            return (
+              <ListItem
+                key={`item-${id}`}
+                id={id}
+                item={item}
+                isChecked={checkedState[id] || false}
+                onCheckboxChange={() => handleCheckboxChange(id)}
+                deleteItem={deleteItem}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );

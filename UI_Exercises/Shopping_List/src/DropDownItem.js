@@ -1,3 +1,5 @@
+import './App.css';
+
 export default function DropdownItem({ item }) {
   return (
     <div className="dropdown-item">
