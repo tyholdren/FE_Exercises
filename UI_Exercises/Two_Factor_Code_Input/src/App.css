@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+}
+
+.App {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.code-input-container {
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.code-input-container input {
+  height: 50px;
+  width: 20%;
+  text-align: center;
+}
