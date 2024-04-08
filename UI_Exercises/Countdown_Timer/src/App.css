@@ -1,0 +1,24 @@
+* {
+  box-sizing: border-box;
+}
+
+.countdown-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.time-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.time-container input {
+  width: 50px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.time-container span {
+  width: 10px;
+}
