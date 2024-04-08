@@ -1,4 +1,4 @@
-import Countdown from './Countdown';
+import CountdownManager from './CountdownManager';
 import './App.css';
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <div className="countdown-container">
         <h2>Countdown Timer</h2>
-        <Countdown />
+        <CountdownManager />
       </div>
     </div>
   );

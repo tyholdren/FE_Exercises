@@ -1,4 +1,4 @@
-export default function TimeInput({
+export default function TimerInput({
   htmlFor,
   id,
   name,
