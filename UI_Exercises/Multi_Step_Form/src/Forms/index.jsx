@@ -6,24 +6,24 @@ export default function Form() {
   const [index, setIndex] = useState(0);
 
   const NAV_PANEL = [
-    { button: 1, stepNumber: 'STEP 1', content: 'YOUR INFO' },
-    { button: 2, stepNumber: 'STEP 2', content: 'SELECT PLAN' },
-    { button: 3, stepNumber: 'STEP 3', content: 'ADD-ONS' },
-    { button: 4, stepNumber: 'STEP 4', content: 'SUMMARY' },
+    { id: 1, stepNumber: 'STEP 1', content: 'YOUR INFO' },
+    { id: 2, stepNumber: 'STEP 2', content: 'SELECT PLAN' },
+    { id: 3, stepNumber: 'STEP 3', content: 'ADD-ONS' },
+    { id: 4, stepNumber: 'STEP 4', content: 'SUMMARY' },
   ];
 
-  const navigateToForm = index => {
-    setIndex(index);
+  const navigateToForm = formIndex => {
+    setIndex(formIndex);
   };
 
   return (
     <div className="form-container">
       <div>
-        {NAV_PANEL.map(({ button, stepNumber, content }, index) => {
+        {NAV_PANEL.map(({ id, stepNumber, content }, index) => {
           return (
             <Section
-              key={index}
-              button={button}
+              key={id}
+              button={id}
               stepNumber={stepNumber}
               content={content}
               onClick={() => navigateToForm(index)}
