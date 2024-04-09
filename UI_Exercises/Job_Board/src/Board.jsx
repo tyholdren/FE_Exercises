@@ -48,8 +48,8 @@ export default function Board() {
   }
 
   return (
-    <div className="general-container">
-      <div className="posts-container">
+    <div className="container container--board-container">
+      <div className="container__posts">
         {postings.map(({ by, id, time, title, url }) => {
           return (
             <PostCard
@@ -63,7 +63,9 @@ export default function Board() {
           );
         })}
       </div>
-      <button onClick={() => getPosts(6)}>Load More Jobs</button>
+      <button className="container__button" onClick={() => getPosts(6)}>
+        Load More Jobs
+      </button>
     </div>
   );
 }
