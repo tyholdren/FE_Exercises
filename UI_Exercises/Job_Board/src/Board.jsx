@@ -9,6 +9,15 @@ export default function Board() {
   const [startingIndex, setStartingIndex] = useState(0);
 
   useEffect(() => {
+    async function fetchPostIds() {
+      try {
+        const response = await fetch(IDS_URL);
+        const ids = await response.json();
+        setAllPostIds(ids);
+      } catch (error) {
+        throw new Error(error);
+      }
+    }
     fetchPostIds();
   }, []);
 
@@ -17,16 +26,6 @@ export default function Board() {
       getPosts(9);
     }
   }, [allPostIds]);
-
-  async function fetchPostIds() {
-    try {
-      const response = await fetch(IDS_URL);
-      const ids = await response.json();
-      setAllPostIds(ids);
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
 
   async function getPosts(size) {
     const nextPostIds = allPostIds.slice(startingIndex, startingIndex + size);
