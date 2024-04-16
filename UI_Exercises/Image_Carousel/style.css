@@ -1,0 +1,28 @@
+.image-container {
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.image-container img {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+}
+
+.button {
+  position: absolute;
+  z-index: 10;
+  opacity: 50%;
+}
+
+.left-button {
+  left: 10px;
+}
+
+.right-button {
+  right: 10px;
+}
