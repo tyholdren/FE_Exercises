@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      /*
+
+            Adam: Hello
+              John: Hi, how are you?
+                Adam: Good thanks, and you?
+                Adam: Are you there?
+                  John: Yes, sorry, I was outside walking my dog
+            Alice: It's a nice day out
+              Sarah: Sure is!
+                Alice: Do you want to get lunch later?
+
+            1. Render list of messages in the correct hierarchy
+            2. Allow the user to open and close threads
+      */
+
+      const App = {
+        models: {
+          users: [
+            { id: 12, name: 'Alice' },
+            { id: 43, name: 'Adam' },
+            { id: 76, name: 'John' },
+            { id: 6, name: 'Sarah' },
+          ],
+
+          messages: [
+            { id: 789, userId: 43, message: 'Hello', replies: [800] },
+            {
+              id: 800,
+              userId: 76,
+              message: 'Hi, how are you?',
+              replies: [820, 874],
+            },
+            {
+              id: 801,
+              userId: 12,
+              message: "It's a nice day out",
+              replies: [823],
+            },
+            {
+              id: 820,
+              userId: 43,
+              message: 'Good thanks, and you?',
+              replies: [],
+            },
+            { id: 823, userId: 6, message: 'Sure is!', replies: [7000] },
+            { id: 874, userId: 43, message: 'Are you there?', replies: [1045] },
+            {
+              id: 1045,
+              userId: 76,
+              message: 'Yes, sorry, I was outside walking my dog',
+              replies: [],
+            },
+            {
+              id: 7000,
+              userId: 12,
+              message: 'Do you want to get lunch later?',
+              replies: [],
+            },
+          ],
+        },
+
+        configureTree(models) {
+          const map = new Map();
+
+          const getUserName = userId => {
+            const { id, name } = models.users.find(el => el.id === userId);
+            return name;
+          };
+
+          // setting up the map with each message id
+          // and the info associated with it, including replies
+          models.messages.forEach(message => {
+            map.set(message.id, {
+              userId: message.userId,
+              name: getUserName(message.userId),
+              message: message.message,
+              replies: message.replies,
+            });
+          });
+
+          // replacing the replies of each message id entry with
+          // array that contains numbers for each entry with
+          // the objects that correspond to the reply number
+          models.messages.forEach(message => {
+            const value = map.get(message.id);
+            const replyObjArray = value.replies.map(reply => {
+              return map.get(reply);
+            });
+            value.replies = replyObjArray;
+            map.set(message.id, value);
+          });
+
+          // get an array of all the replies that appear as
+          // reply on a root message its a
+          // 2-D array so we .flat() to make it 1-D
+          const repliesArray = models.messages
+            .map(message => {
+              return message.replies;
+            })
+            .flat();
+
+          // identify the root messages
+          const rootMessages = [...map.keys()].filter(key => {
+            return !repliesArray.includes(key);
+          });
+
+          // only keep root messages in the map,
+          // each root message will contain the remaining submessages
+          // so no need to keep them at root level anymore
+          repliesArray.forEach(reply => {
+            map.delete(reply);
+          });
+
+          return [...map.values()];
+        },
+
+        template(chatContainer) {
+          return `
+                  <h1>Basic Chat App</h1>
+                  ${chatContainer}
+                `;
+        },
+
+        renderList(htmlStr, list) {
+          list.forEach(item => {
+            if (item) {
+              htmlStr += `<li>${item.name}: ${item.message}</li>`;
+              if (item.replies && item.replies.length) {
+                htmlStr =
+                  htmlStr + `<ul>${this.renderList('', item.replies)}</ul>`;
+              }
+            }
+          });
+          return htmlStr;
+        },
+
+        renderData(list) {
+          let finalHtml = `<ul>${this.renderList(``, list)}</ul>`;
+          return `<div>${finalHtml}<div>`;
+        },
+
+        initialize() {
+          const messageTree = this.configureTree(this.models);
+          const chatContainer = this.renderData(messageTree);
+          document.getElementById('app').innerHTML =
+            this.template(chatContainer);
+        },
+      };
+
+      App.initialize();
+    </script>
+  </body>
+</html>
