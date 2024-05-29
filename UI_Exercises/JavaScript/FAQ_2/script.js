@@ -1,5 +1,4 @@
-import { Question } from './Question.js';
-import { Answer } from './Answer.js';
+import { Content } from './Content.js';
 
 const FAQ_DATA = [
   {
@@ -26,8 +25,8 @@ class App {
 
   initialize() {
     FAQ_DATA.forEach(({ question, answer }, index) => {
-      const curQuestion = new Question(question);
-      const curAnswer = new Answer(answer);
+      const curQuestion = new Content(question);
+      const curAnswer = new Content(answer);
 
       const renderedQuestion = curQuestion.render();
       const renderedAnswer = curAnswer.render();
