@@ -39,13 +39,8 @@ class App {
       );
     });
 
-    this.questions.forEach(({ value }) => {
-      this.faqContainer.appendChild(value);
-    });
-
-    this.answers.forEach(({ value }) => {
-      this.faqContainer.appendChild(value);
-    });
+    this.renderContent(this.questions);
+    this.renderContent(this.answers);
   }
 
   toggleAnswer(curIndex) {
@@ -58,7 +53,12 @@ class App {
     curAnswer.value.style.display = isActive === true ? 'block' : 'none';
 
     this.answers = newAnswers;
-    this.answers.forEach(({ value }) => {
+
+    this.renderContent(this.answers);
+  }
+
+  renderContent(content) {
+    content.forEach(({ value }) => {
       this.faqContainer.appendChild(value);
     });
   }
