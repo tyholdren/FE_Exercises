@@ -21,11 +21,10 @@ class App {
   constructor() {
     this.questions = [];
     this.answers = [];
+    this.faqContainer = document.getElementById('faq-container');
   }
 
   initialize() {
-    const faqContainer = document.getElementById('faq-container');
-
     FAQ_DATA.forEach(({ question, answer }, index) => {
       const curQuestion = new Question(question);
       const curAnswer = new Answer(answer);
@@ -34,12 +33,34 @@ class App {
       const renderedAnswer = curAnswer.render();
 
       this.questions.push({ id: index, value: renderedQuestion });
-      this.answers.push({ id: index, value: renderedAnswer });
-    });
-    const mergedData = [...this.questions, ...this.answers];
+      this.answers.push({ id: index, value: renderedAnswer, isActive: false });
 
-    mergedData.forEach(({ value }) => {
-      faqContainer.appendChild(value);
+      renderedQuestion.addEventListener('click', () =>
+        this.toggleAnswer(index)
+      );
+    });
+
+    this.questions.forEach(({ value }) => {
+      this.faqContainer.appendChild(value);
+    });
+
+    this.answers.forEach(({ value }) => {
+      this.faqContainer.appendChild(value);
+    });
+  }
+
+  toggleAnswer(curIndex) {
+    const newAnswers = [...this.answers];
+    let curAnswer = newAnswers[curIndex];
+    let { isActive } = curAnswer;
+
+    curAnswer.isActive = !curAnswer.isActive;
+
+    curAnswer.value.style.display = isActive === true ? 'block' : 'none';
+
+    this.answers = newAnswers;
+    this.answers.forEach(({ value }) => {
+      this.faqContainer.appendChild(value);
     });
   }
 }
