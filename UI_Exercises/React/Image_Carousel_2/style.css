@@ -1,0 +1,28 @@
+h1,
+p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.app-container {
+  display: flex;
+  position: absolute;
+  align-items: center;
+}
+
+.carousel-item--button {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ccc;
+  padding: 10px;
+  position: absolute;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.right-button {
+  right: 0px;
+}
+
+.left-button {
+  left: 0px;
+}
