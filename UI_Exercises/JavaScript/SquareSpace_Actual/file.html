@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <title>Document</title>
+    <style>
+      /* Add CSS styles here */
+      * {
+        box-sizing: border-box;
+        margin: 0px;
+        padding: 0px;
+      }
+
+      td {
+        border: 1px solid black;
+        width: 25vw;
+        padding: 0.25rem;
+      }
+
+      button {
+        background-color: green;
+        border: 1px solid black;
+      }
+
+      input {
+        border: 1px solid black;
+      }
+
+      .edit-form {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid black;
+        padding: 1rem;
+        position: fixed;
+        background-color: grey;
+        z-index: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .edit-form label {
+        margin-bottom: 0.5rem;
+      }
+
+      .edit-form input {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app-container" class="app-container">
+      <h1>Table</h1>
+      <form id="add-row-form">
+        <label for="add-name">
+          <input
+            type="text"
+            placeholder="add name"
+            id="add-name-input"
+            name="add-name-input"
+          />
+        </label>
+        <label for="add-age">
+          <input
+            type="text"
+            placeholder="add age"
+            id="add-age-input"
+            name="add-age-input"
+          />
+        </label>
+        <label for="add-date">
+          <input
+            type="text"
+            placeholder="add date"
+            id="add-date-input"
+            name="add-date-input"
+          />
+        </label>
+        <button type="submit" class="add-btn" id="add-btn">add row</button>
+      </form>
+      <form id="edit-form">
+        <label for="edit-name-input">
+          <input type="text" id="edit-name-input" name="edit-name-input" />
+        </label>
+        <label for="edit-age-input">
+          <input type="text" id="edit-age-input" name="edit-age-input" />
+        </label>
+        <label for="edit-date-input">
+          <input type="text" id="edit-date-input" name="edit-date-input" />
+        </label>
+        <button type="submit">update row</button>
+        <button type="button">cancel update</button>
+      </form>
+      <table id="table">
+        <tr>
+          <td>name</td>
+          <td>age</td>
+          <td>birth date</td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      class Row {
+        constructor(index, name, age, date) {
+          this.index = index;
+          this.name = name;
+          this.age = age;
+          this.date = date;
+        }
+
+        render() {
+          const rowContainer = document.createElement('tr');
+          const nameCell = document.createElement('td');
+          const ageCell = document.createElement('td');
+          const dateCell = document.createElement('td');
+          const actionsCell = document.createElement('td');
+
+          const editBtn = document.createElement('button');
+          const deleteBtn = document.createElement('button');
+          editBtn.textContent = 'edit';
+          deleteBtn.textContent = 'delete';
+
+          editBtn.id = `edit-btn_${this.index}`;
+          deleteBtn.id = `delete-btn_${this.index}`;
+
+          rowContainer.id = `row-container_${this.index}`;
+          nameCell.id = `name-cell_${this.index}`;
+          ageCell.id = `age-cell_${this.index}`;
+          dateCell.id = `date-cell_${this.index}`;
+
+          nameCell.textContent = this.name;
+          ageCell.textContent = this.age;
+          dateCell.textContent = this.date;
+
+          rowContainer.className = 'row-container';
+          nameCell.className = 'name-cell';
+          ageCell.className = 'age-cell';
+          dateCell.className = 'date-cell';
+
+          rowContainer.append(nameCell, ageCell, dateCell, editBtn, deleteBtn);
+          return rowContainer;
+        }
+      }
+
+      class App {
+        constructor() {
+          this.appContainer = document.getElementById('app-container');
+          this.index = 0;
+          this.addRowForm = document.getElementById('add-row-form');
+          this.table = document.getElementById('table');
+
+          this.editForm = document.getElementById('edit-form');
+          this.editNameInput = document.getElementById('edit-name-input');
+          this.editAgeInput = document.getElementById('edit-age-input');
+          this.editDateInput = document.getElementById('edit-date-input');
+
+          this.rowsMap = new Map();
+          this.editingId = null;
+        }
+
+        updateRow(id) {
+          const nameCell = document.getElementById(`name-cell_${id}`);
+          const ageCell = document.getElementById(`age-cell_${id}`);
+          const dateCell = document.getElementById(`date-cell_${id}`);
+
+          const updatedName = this.editNameInput.value;
+          const updatedAge = this.editAgeInput.value;
+          const updatedDate = this.editDateInput.value;
+
+          const newInfo = {
+            name: updatedName,
+            age: updatedAge,
+            date: updatedDate,
+          };
+
+          this.rowsMap.set(id, newInfo);
+
+          nameCell.textContent = updatedName;
+          ageCell.textContent = updatedAge;
+          dateCell.textContent = updatedDate;
+          this.editingId = null;
+          this.editNameInput.placeholder = '';
+          this.editAgeInput.placeholder = '';
+          this.editDateInput.placeholder = '';
+          this.editForm.reset();
+        }
+
+        editRow(id) {
+          const { name, age, date } = this.rowsMap.get(id);
+          this.editNameInput.placeholder = name;
+          this.editAgeInput.placeholder = age;
+          this.editDateInput.placeholder = date;
+        }
+
+        cancelUpdate() {}
+
+        render() {
+          this.addRowForm.addEventListener('submit', event => {
+            event.preventDefault();
+            const formData = new FormData(this.addRowForm);
+            const nameValue = formData.get('add-name-input');
+            const ageValue = formData.get('add-age-input');
+            const dateValue = formData.get('add-date-input');
+
+            this.rowsMap.set(this.index, {
+              name: nameValue,
+              age: ageValue,
+              date: dateValue,
+            });
+
+            console.log(...this.rowsMap.keys());
+
+            const newRow = new Row(
+              this.index,
+              nameValue,
+              ageValue,
+              dateValue
+            ).render();
+            this.index += 1;
+            this.table.append(newRow);
+            this.addRowForm.reset();
+          });
+
+          this.table.addEventListener('click', event => {
+            const { textContent, id } = event.target;
+            const rowId = id.split('_')[1];
+
+            if (textContent === 'delete') {
+              const rowContainerId = `row-container_${rowId}`;
+              const rowToDelete = document.getElementById(rowContainerId);
+              rowToDelete.parentNode.removeChild(rowToDelete);
+            } else if (textContent === 'edit') {
+              this.editingId = parseInt(rowId);
+              this.editRow(parseInt(rowId));
+            }
+          });
+
+          this.editForm.addEventListener('submit', event => {
+            event.preventDefault();
+            const updatedFormData = new FormData(this.editForm);
+            const updatedNameValue = updatedFormData.get('edit-name-input');
+            const updatedAge = updatedFormData.get('edit-age-input');
+            const updatedDate = updatedFormData.get('edit-date-input');
+
+            this.updateRow(this.editingId);
+          });
+        }
+      }
+
+      const app = new App();
+      app.render();
+    </script>
+  </body>
+</html>

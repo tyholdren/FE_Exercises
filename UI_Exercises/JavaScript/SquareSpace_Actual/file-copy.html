@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+  <body>
+    <h1>Table Viewer</h1>
+    <table id="table" class="table">
+      <thead>
+        <tr>
+          <th class="primary-column">Email</th>
+          <th class="primary-column">First Name</th>
+          <th class="primary-column">Last Name</th>
+          <th class="secondary-column">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <!--START EXAMPLE ROW (feel free to delete this if it interferes with your solution)-->
+        <!-- <tr>
+          <td>foobar@example.com</td>
+          <td>Foo</td>
+          <td>Bar</td>
+          <td>
+            <button>Move Up</button>
+            <button>Move Down</button>
+            <button>Delete</button>
+          </td>
+        </tr> -->
+        <!--END EXAMPLE ROW-->
+      </tbody>
+    </table>
+    <h1>Add New Row</h1>
+    <form id="add-row-form">
+      <label for="email-input">
+        <input
+          type="text"
+          id="email-input"
+          name="email-input"
+          placeholder="Email"
+        />
+      </label>
+      <label for="first-name-input">
+        <input
+          type="text"
+          id="first-name-input"
+          name="first-name-input"
+          placeholder="First Name"
+        />
+      </label>
+      <label for="last-name-input">
+        <input
+          type="text"
+          id="last-name-input"
+          name="last-name-input"
+          placeholder="Last Name"
+        />
+      </label>
+
+      <button type="submit">Add</button>
+      <div id="email-error" class="error-message">Invalid email</div>
+      <div id="first-name-error" class="error-message">Invalid first name</div>
+      <div id="last-name-error" class="error-message">Invalid last name</div>
+    </form>
+    <script>
+      const EMAIL_REGEX = /^\w+@\w+\.\w+$/;
+      const NAME_REGEX = /^\w{2,}$/; // Use for first and last name
+      const EMAIL_ERROR_ID = 'email-error';
+      const FIRST_NAME_ERROR_ID = 'first-name-error';
+      const LAST_NAME_ERROR_ID = 'last-name-error';
+
+      class Row {
+        constructor(index, email, firstName, lastName) {
+          this.index = index;
+          this.email = email;
+          this.firstName = firstName;
+          this.lastName = lastName;
+        }
+
+        render() {
+          const row = document.createElement('tr');
+
+          const emailCell = document.createElement('td');
+          const firstNameCell = document.createElement('td');
+          const lastNameCell = document.createElement('td');
+          const actionsCell = document.createElement('td');
+
+          row.id = `row_${this.index}`;
+          emailCell.id = `email-cell_${this.index}`;
+          firstNameCell.id = `first-name-cell_${this.index}`;
+          lastNameCell.id = `last-name-cell_${this.index}`;
+
+          emailCell.textContent = this.email;
+          firstNameCell.textContent = this.firstName;
+          lastNameCell.textContent = this.lastName;
+
+          const moveUpBtn = document.createElement('button');
+          const moveDownBtn = document.createElement('button');
+          const deleteBtn = document.createElement('button');
+
+          moveUpBtn.className = 'move-up-btn';
+          moveDownBtn.className = 'move-down-btn';
+
+          moveUpBtn.textContent = 'move up';
+          moveDownBtn.textContent = 'move down';
+          deleteBtn.textContent = 'delete';
+
+          moveUpBtn.id = `move-up-btn_${this.index}`;
+          moveDownBtn.id = `move-down-btn_${this.index}`;
+          deleteBtn.id = `delete-btn_${this.index}`;
+
+          actionsCell.append(moveUpBtn, moveDownBtn, deleteBtn);
+
+          row.append(emailCell, firstNameCell, lastNameCell, actionsCell);
+          return row;
+        }
+      }
+
+      class App {
+        constructor() {
+          this.table = document.getElementById('table-body');
+          this.addRowForm = document.getElementById('add-row-form');
+          this.index = 0;
+          this.maxLength = 15;
+          this.rowsMap = new Map();
+          this.errors = new Set();
+          this.state = {
+            firstMoveUpBtnId: null,
+            lastMoveDownBtnId: null,
+          };
+        }
+
+        deleteRow(rowId) {
+          const rowToDelete = document.getElementById(`row_${rowId}`);
+          rowToDelete.parentNode.removeChild(rowToDelete);
+          this.updateState();
+        }
+
+        moveRowUp(rowId) {
+          const row = document.getElementById(`row_${rowId}`);
+          const prevRow = row.previousElementSibling;
+          if (prevRow && prevRow.tagName === 'TR') {
+            this.table.insertBefore(row, prevRow);
+            this.updateState();
+          }
+        }
+
+        moveRowDown(rowId) {
+          const row = document.getElementById(`row_${rowId}`);
+          const nextRow = row.nextElementSibling;
+          if (nextRow && nextRow.tagName === 'TR') {
+            this.table.insertBefore(nextRow, row);
+            this.updateState();
+          }
+        }
+
+        validateInfo(email, firstName, lastName) {
+          const isValidEmail = EMAIL_REGEX.test(email);
+          const isValidFirstName = NAME_REGEX.test(firstName);
+          const isValidLastName = NAME_REGEX.test(lastName);
+
+          if (!isValidEmail) {
+            this.errors.add(EMAIL_ERROR_ID);
+          }
+          if (!isValidFirstName) {
+            this.errors.add(FIRST_NAME_ERROR_ID);
+          }
+          if (!isValidLastName) {
+            this.errors.add(LAST_NAME_ERROR_ID);
+          }
+        }
+
+        updateState() {
+          const rows = this.table.querySelectorAll('tr');
+          if (rows.length > 0) {
+            if (this.state.firstMoveUpBtnId) {
+              const firstBtn = document.getElementById(
+                this.state.firstMoveUpBtnId
+              );
+              if (firstBtn) firstBtn.disabled = false;
+            }
+            if (this.state.lastMoveDownBtnId) {
+              const lastBtn = document.getElementById(
+                this.state.lastMoveDownBtnId
+              );
+              if (lastBtn) lastBtn.disabled = false;
+            }
+
+            const firstRowMoveUpBtn = rows[0].querySelector('.move-up-btn');
+            const lastRowMoveDownBtn =
+              rows[rows.length - 1].querySelector('.move-down-btn');
+
+            if (firstRowMoveUpBtn) {
+              this.state.firstMoveUpBtnId = firstRowMoveUpBtn.id;
+              firstRowMoveUpBtn.disabled = true;
+            }
+            if (lastRowMoveDownBtn) {
+              this.state.lastMoveDownBtnId = lastRowMoveDownBtn.id;
+              lastRowMoveDownBtn.disabled = true;
+            }
+          } else {
+            this.state.firstMoveUpBtnId = null;
+            this.state.lastMoveDownBtnId = null;
+          }
+        }
+
+        displayErrorMessages() {
+          for (const errorId of this.errors) {
+            const error = document.getElementById(errorId);
+            error.style.display = 'block';
+            setTimeout(() => {
+              error.style.display = 'none';
+              this.errors.delete(errorId);
+            }, 1000);
+          }
+        }
+
+        truncateString(str) {
+          if (str.length > this.maxLength) {
+            return str.slice(0, this.maxLength) + '...';
+          }
+          return str;
+        }
+
+        render() {
+          this.table.addEventListener('click', event => {
+            const { id, textContent } = event.target;
+            const rowId = parseInt(id.split('_')[1]);
+            if (textContent === 'delete') {
+              this.deleteRow(rowId);
+            } else if (textContent === 'move up') {
+              this.moveRowUp(rowId);
+            } else if (textContent === 'move down') {
+              this.moveRowDown(rowId);
+            }
+          });
+
+          this.addRowForm.addEventListener('submit', event => {
+            event.preventDefault();
+
+            const formData = new FormData(this.addRowForm);
+            const email = formData.get('email-input');
+            const firstName = formData.get('first-name-input');
+            const lastName = formData.get('last-name-input');
+
+            this.validateInfo(email, firstName, lastName);
+
+            const formattedEmail = this.truncateString(email);
+            const formattedFirstName = this.truncateString(firstName);
+            const formattedLastName = this.truncateString(lastName);
+
+            if (this.errors.size === 0) {
+              const newRow = new Row(
+                this.index,
+                formattedEmail,
+                formattedFirstName,
+                formattedLastName
+              ).render();
+              this.table.append(newRow);
+              this.index += 1;
+              this.addRowForm.reset();
+              this.updateState();
+            } else {
+              this.displayErrorMessages();
+            }
+          });
+        }
+      }
+
+      const newApp = new App();
+      newApp.render();
+    </script>
+  </body>
+</html>

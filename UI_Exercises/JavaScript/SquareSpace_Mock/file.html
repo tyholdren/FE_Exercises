@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <title>Document</title>
+    <div class="app-container">
+      <div>
+        <form id="add-task-modal" class="add-task-modal">
+          <h2 id="task-modal-header">Add a task</h2>
+          <label htmlFor="task-modal__task-field">
+            enter task
+            <input type="text" name="task-modal__task-field" id="task-modal__task-field" />
+          </label>
+          <label htmlFor="task-modal__status-field">
+            enter status
+            <input type="text" name="task-modal__status-field" id="task-modal__status-field" />
+          </label>
+          <label htmlFor="task-difficulty-field">
+            enter difficulty
+            <input type="text" name="task-modal__difficulty-field" id="task-modal__difficulty-field" />
+          </label>
+          <label htmlFor="task-modal__email-field">
+            enter email
+            <input type="email" name="task-modal__email-field" id="task-modal__email-field" />
+          </label>
+          <label htmlFor="task-modal__date-field">
+            enter date
+            <input type="date" name="task-modal__date-field" id="task-modal__date-field" />
+          </label>
+
+          <button id="add-btn" type="submit">Add New Row</button>
+          <button id="clear-btn" type="submit">Clear Fields</button>
+          <button id="update-btn" type="submit">Update Task</button>
+        </form>
+      </div>
+      <div>
+      <h1>Sample Table</h1>
+      <table id="table-container" class="table-container">
+        <thead id="table-head">
+          <tr>
+            <th class="table-column">Task</th>
+            <th class="table-column">Status</th>
+            <th class="table-column">Difficulty</th>
+            <th class="table-column">Email</th>
+            <th class="table-column">Date</th>
+            <th class="table-column">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </head>
+  <body></body>
+</div>
+  <script src="index.js" type="module"></script>
+</html>

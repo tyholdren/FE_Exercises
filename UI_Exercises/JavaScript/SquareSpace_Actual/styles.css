@@ -1,0 +1,56 @@
+* {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+html {
+  font-family: Arial;
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+table,
+th,
+td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+}
+
+table {
+  width: 1000px;
+  table-layout: fixed;
+}
+
+th,
+td {
+  padding: 5px;
+  width: 20%;
+}
+
+th:last-child,
+td:last-child {
+  width: 40%;
+}
+
+th {
+  background-color: aliceblue;
+}
+
+.primary-column {
+  width: 20%;
+}
+
+.secondary-column {
+  width: 40%;
+}
+
+#error {
+  color: red;
+}
+
+#error.visible {
+  display: block;
+}

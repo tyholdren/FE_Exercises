@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+.app-container {
+  position: relative;
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  width: 30rem;
+  height: 30rem;
+}
+
+button {
+  position: absolute;
+  z-index: 100;
+}
+
+.next-btn {
+  right: 10px;
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease-in-out;
+}

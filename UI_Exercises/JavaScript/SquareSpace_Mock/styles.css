@@ -1,0 +1,24 @@
+* {
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+}
+
+.app-container {
+  display: flex;
+}
+
+.table-container {
+  border: 1px solid black;
+}
+
+.table-column {
+  border: 1px solid black;
+  padding: 0.25rem;
+}
+
+.add-task-modal {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
