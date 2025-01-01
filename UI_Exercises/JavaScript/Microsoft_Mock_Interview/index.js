@@ -13,17 +13,12 @@ export class App {
     this.searchValue = '';
   }
 
-  getNext() {
-    this.page++;
-    this.handleNewPage();
-  }
-
-  getPrev() {
-    this.page--;
-    this.handleNewPage();
-  }
-
-  handleNewPage() {
+  handleNewPage(increment) {
+    if (increment) {
+      this.page++;
+    } else {
+      this.page--;
+    }
     this.prevBtn.disabled = this.page === 1;
     this.nextBtn.disabled = this.page === this.totalPages;
     this.pageNumber.innerHTML = `Page ${this.page}`;
@@ -31,8 +26,25 @@ export class App {
     this.renderData();
   }
 
-  fetchData() {
-    return MOCK_DATA;
+  MOCK_FETCH() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({
+          ok: true,
+          json: () => Promise.resolve(MOCK_DATA),
+        });
+      }, 1000);
+    });
+  }
+
+  async fetchData() {
+    try {
+      const res = await this.MOCK_FETCH();
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   }
 
   renderData() {
@@ -69,18 +81,20 @@ export class App {
     });
   }
 
-  init() {
-    const data = this.fetchData();
-    this.results = data;
+  async init() {
+    this.resultsContainer.textContent = 'Loading Results...';
+    const data = await this.fetchData();
+    this.resultsContainer.textContent = '';
+    this.results = data ? data : [];
     this.totalPages = Math.ceil(data.length / this.size);
     this.renderData();
     this.pageNumber.innerHTML = `Page ${this.page}`;
     this.nextBtn.addEventListener('click', () => {
-      this.getNext();
+      this.handleNewPage(true);
     });
 
     this.prevBtn.addEventListener('click', () => {
-      this.getPrev();
+      this.handleNewPage(false);
     });
     this.prevBtn.disabled = this.page === 1;
     this.searchBar.addEventListener('input', e => {
