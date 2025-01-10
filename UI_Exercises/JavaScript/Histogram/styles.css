@@ -1,0 +1,36 @@
+:root {
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+.app-container {
+  display: flex;
+}
+
+.y-axis {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+}
+
+.x-axis {
+  display: flex;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+}
+
+.bar__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.bar__item {
+  width: 20px;
+  background-color: green;
+}
