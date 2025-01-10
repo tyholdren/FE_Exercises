@@ -4,13 +4,15 @@ import { Calendar } from './Calendar.js';
 class App {
   constructor() {
     this.appContainer = document.getElementById('app-container');
+    this.headerContainer = document.getElementById('header-container');
+    this.calendarContainer = document.getElementById('calendar-container');
   }
 
   init() {
     const header = new Header.render();
     const calendar = new Calendar.render();
-
-    this.appContainer.append(header, calendar);
+    this.headerContainer.append(header);
+    this.calendarContainer.append(calendar);
   }
 }
 

@@ -1,4 +1,4 @@
-const MONTHS = {
+export const MONTHS = {
   JAN: 'January',
   FEB: 'February',
   MAR: 'March',
@@ -13,11 +13,7 @@ const MONTHS = {
   DEC: 'December',
 };
 
-function isLeapYear(year) {
-  return year % 4 === 0;
-}
-
-const DAY_COUNT = {
+export const DAY_COUNT = {
   [MONTHS.JAN]: 31,
   [MONTHS.FEB]: 28,
   [MONTHS.MAR]: 31,
