@@ -12,6 +12,9 @@ class App {
     console.log('app is running');
     const header = new Header().render();
     const calendar = new Calendar().render();
+
+    calendar.className = 'calendar';
+
     this.headerContainer.append(header);
     this.calendarContainer.append(calendar);
   }

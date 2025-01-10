@@ -10,6 +10,7 @@ export class Calendar {
     const fragment = document.createDocumentFragment();
     this.visibleWeeks.forEach(_ => {
       const curWeek = new Week().render();
+      curWeek.className = 'week';
       fragment.append(curWeek);
     });
     return fragment;

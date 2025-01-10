@@ -4,8 +4,23 @@
   padding: 0px;
 }
 
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* .calendar {
+  display: flex;
+  flex-direction: column;
+}
+
 .day {
   border: 1px solid black;
   width: 20px;
   height: 20px;
 }
+
+.week {
+  display: flex;
+  flex-direction: row;
+} */
